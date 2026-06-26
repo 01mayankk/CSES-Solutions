@@ -97,11 +97,11 @@ Since the problem only asks for one missing value, this extra memory can be avoi
 
 # Approach 2: Using the Sum Formula (Optimal)
 
-> **Implementation:** See **`Solution.cpp`**
+> **💻 Implementation:** [`Solution.cpp`](./Solution.cpp)
 
 ## Intuition
 
-The sum of the first **n** natural numbers is known beforehand.
+The sum of the first **n** natural numbers is
 
 ```
 Sum = n × (n + 1) / 2
