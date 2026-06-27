@@ -1,0 +1,40 @@
+CSES Problem Set
+Problem: Repetitions
+
+Time Limit: 1.00 s
+Memory Limit: 512 MB
+
+Problem Statement
+
+You are given a DNA sequence consisting only of the characters:
+
+A
+C
+G
+T
+
+Your task is to determine the length of the longest contiguous substring that contains only one distinct character.
+
+Input
+
+The only input line contains a string of length n.
+
+Output
+
+Print one integer — the length of the longest repetition.
+
+Constraints
+
+1 ≤ n ≤ 10^6
+
+Example
+
+Input
+ATTCGGGA
+
+Output
+3
+
+Explanation
+
+The longest consecutive sequence of identical characters is "GGG", whose length is 3.
