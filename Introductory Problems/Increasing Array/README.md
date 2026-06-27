@@ -8,58 +8,74 @@
 
 # Problem Overview
 
-You are given an array of **n** integers. In one operation, you may increase the value of any element by **1**.
+You are given an array of **n** integers. In a single operation, you may increase the value of any element by **1**.
 
-Your objective is to transform the array into a **non-decreasing** sequence, where every element is greater than or equal to its previous element, while performing the minimum possible number of operations.
+Your objective is to transform the array into a **non-decreasing** sequence, where every element is greater than or equal to its previous element, while performing the **minimum number of operations**.
+
+---
+
+# Constraints Analysis
+
+| Constraint               | Impact                                                              |
+| ------------------------ | ------------------------------------------------------------------- |
+| `1 ≤ n ≤ 2 × 10⁵`        | Requires an efficient linear-time solution.                         |
+| `1 ≤ xᵢ ≤ 10⁹`           | Values are large, but only comparisons and increments are required. |
+| Time Limit: **1 sec**    | An **O(n²)** approach would exceed the time limit.                  |
+| Memory Limit: **512 MB** | An **O(1)** extra-space solution is preferred.                      |
+
+**Why Greedy?**
+
+Since every element only depends on its immediate predecessor, processing the array once from left to right guarantees the minimum number of required increments.
 
 ---
 
 # Key Observations
 
 * Only **increment operations** are allowed.
-* Decreasing an element is not permitted.
-* Every element must be at least equal to its previous element.
-* If an element is smaller than its predecessor, increasing it exactly to the previous element is always optimal.
-* A single left-to-right traversal is sufficient to solve the problem.
+* Decreasing any element is not permitted.
+* Every element must be **greater than or equal to** its previous element.
+* If the current element is smaller than its predecessor, increasing it exactly to the previous value is always optimal.
+* Every element is processed exactly once.
 
 ---
 
 # Intuition
 
-While traversing the array from left to right, every element depends only on its immediate predecessor.
+Traverse the array from left to right while maintaining a valid non-decreasing prefix.
 
-Whenever the current element is smaller than the previous one, it violates the required ordering. The minimum correction is to increase it until it becomes equal to the previous element. Any additional increase would only add unnecessary operations.
+Whenever the current element violates the required order, increase it until it becomes equal to the previous element. Since any larger value would only increase the number of operations, matching the previous element is always the optimal choice.
 
 ---
 
 # Approach
 
-Maintain the array in a valid state while traversing it.
+Maintain the array in a valid state throughout the traversal.
 
 For each element:
 
-* If it is already greater than or equal to the previous element, move to the next element.
+* If the current element is already greater than or equal to the previous one, continue.
 * Otherwise:
 
-  * Calculate the difference between the previous and current element.
-  * Add this difference to the answer.
+  * Calculate the required increment.
+  * Add this value to the answer.
   * Update the current element to match the previous element.
 
-Since each element is processed exactly once, the algorithm runs efficiently in linear time.
+By the time the traversal finishes, the entire array becomes non-decreasing using the minimum possible number of operations.
 
 ---
 
 # Algorithm
 
-1. Read the input array.
-2. Initialize `moves = 0`.
-3. Traverse the array from index `1`.
-4. If `arr[i] < arr[i-1]`:
+1. Read the size of the array.
+2. Store all elements.
+3. Initialize the answer as `0`.
+4. Traverse the array from index `1`.
+5. If the current element is smaller than the previous element:
 
-   * Add `arr[i-1] - arr[i]` to `moves`.
-   * Set `arr[i] = arr[i-1]`.
-5. Continue until all elements have been processed.
-6. Print `moves`.
+   * Add the difference to the answer.
+   * Update the current element to the previous element.
+6. Continue until all elements are processed.
+7. Print the minimum number of moves.
 
 ---
 
@@ -71,51 +87,51 @@ Since each element is processed exactly once, the algorithm runs efficiently in 
 3 2 5 1 7
 ```
 
-| Step          | Description                              |
-| ------------- | ---------------------------------------- |
-| Initial Array | `3 2 5 1 7`                              |
-| i = 1         | `2 < 3`, increase `2 → 3` (**+1 move**)  |
-| Current Array | `3 3 5 1 7`                              |
-| i = 2         | `5 ≥ 3`, no operation required           |
-| Current Array | `3 3 5 1 7`                              |
-| i = 3         | `1 < 5`, increase `1 → 5` (**+4 moves**) |
-| Current Array | `3 3 5 5 7`                              |
-| i = 4         | `7 ≥ 5`, no operation required           |
-| Final Array   | `3 3 5 5 7`                              |
-| Total Moves   | **5**                                    |
+| Step              | Description                              |
+| ----------------- | ---------------------------------------- |
+| Initial Array     | `3 2 5 1 7`                              |
+| `i = 1`           | `2 < 3`, increase `2 → 3` (**+1 move**)  |
+| Current Array     | `3 3 5 1 7`                              |
+| `i = 2`           | `5 ≥ 3`, no operation required           |
+| Current Array     | `3 3 5 1 7`                              |
+| `i = 3`           | `1 < 5`, increase `1 → 5` (**+4 moves**) |
+| Current Array     | `3 3 5 5 7`                              |
+| `i = 4`           | `7 ≥ 5`, no operation required           |
+| Final Array       | `3 3 5 5 7`                              |
+| **Minimum Moves** | **5**                                    |
 
 ---
 
 # Edge Cases
 
-| Case                            | Expected Behavior                                                                             |
-| ------------------------------- | --------------------------------------------------------------------------------------------- |
-| Array contains only one element | Answer is `0`.                                                                                |
-| Array is already non-decreasing | No operations are required.                                                                   |
-| Array is strictly decreasing    | Every element except the first must be increased.                                             |
-| Array contains duplicate values | Duplicates are already valid in a non-decreasing sequence.                                    |
-| Large values (`10^9`)           | The algorithm still works efficiently without overflow when using `long long` for the answer. |
+| Case                         | Expected Output                                       |
+| ---------------------------- | ----------------------------------------------------- |
+| Single element               | `0`                                                   |
+| Already non-decreasing array | `0`                                                   |
+| Strictly decreasing array    | Every element except the first requires modification. |
+| Duplicate values             | Already satisfy the condition.                        |
+| Large element values (`10⁹`) | Handled safely using `long long` for the answer.      |
 
 ---
 
 # Special Cases
 
-* All elements are equal.
-* Every element requires modification.
-* No element requires modification.
-* Multiple consecutive elements need to be increased to the same value.
+* All elements are identical.
+* Every element requires an increment.
+* No increment is required.
+* Multiple consecutive elements need to be updated to the same value.
 
 ---
 
 # Correctness Proof
 
-The algorithm processes the array from left to right while maintaining the invariant that every processed prefix is already non-decreasing.
+The algorithm maintains the invariant that the processed portion of the array is always non-decreasing.
 
-Whenever an element is smaller than its previous element, increasing it exactly to the previous element is the minimum adjustment that satisfies the required condition.
+Whenever an element is smaller than its predecessor, increasing it exactly to the previous element is the smallest possible modification that satisfies the required condition.
 
-Any smaller increase would still violate the ordering, while any larger increase would only add unnecessary operations.
+Choosing any smaller value would still violate the constraint, while choosing any larger value would introduce unnecessary operations.
 
-Since every increment performed is necessary and every element is processed exactly once, the algorithm always computes the minimum number of moves.
+Since every required increment is counted exactly once and every element is processed only once, the algorithm always computes the minimum possible number of moves.
 
 ---
 
@@ -128,21 +144,29 @@ Since every increment performed is necessary and every element is processed exac
 
 ---
 
+# STL Components Used
+
+| STL Component       | Purpose                             |
+| ------------------- | ----------------------------------- |
+| `vector<long long>` | Stores the input array dynamically. |
+
+---
+
 # Key Takeaways
 
-* Greedy algorithms often work when each decision affects only future elements.
-* Processing the array from left to right naturally maintains the required invariant.
+* Greedy algorithms are effective when local optimal decisions lead to a globally optimal solution.
+* Processing the array from left to right naturally preserves the required ordering.
 * Sometimes modifying the current element is always better than modifying previously processed elements.
-* Always choose the minimum adjustment that satisfies the problem's constraints.
+* Choosing the minimum valid adjustment minimizes the total number of operations.
 
 ---
 
 # Common Mistakes
 
-* Using `int` instead of `long long` for the answer.
+* Using `int` instead of `long long` to store the total number of moves.
 * Forgetting to update the current element after increasing it.
-* Using `abs()` instead of directly computing `arr[i-1] - arr[i]`.
-* Trying to modify previous elements instead of the current one.
+* Using `abs()` unnecessarily when the difference is already known to be positive.
+* Attempting to modify previously processed elements.
 
 ---
 
@@ -158,7 +182,6 @@ Since every increment performed is necessary and every element is processed exac
 
 * Missing Number
 * Repetitions
-* Weird Algorithm
 * Array Description
 * Array Division
 
@@ -166,6 +189,6 @@ Since every increment performed is necessary and every element is processed exac
 
 # Solution
 
-The complete C++ implementation can be found here.
+The complete C++ implementation is available here:
 
-➡️ **[Solution.cpp](Solution.cpp)**
+**➡️ [Solution.cpp](Solution.cpp)**
