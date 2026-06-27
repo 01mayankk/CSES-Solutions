@@ -1,0 +1,42 @@
+Permutations
+
+Time Limit: 1.00 s
+Memory Limit: 512 MB
+
+Problem Statement
+
+A permutation of the integers 1, 2, ..., n is called beautiful if the absolute difference between every pair of adjacent elements is not equal to 1.
+
+Given an integer n, construct any beautiful permutation.
+
+If no such permutation exists, print "NO SOLUTION".
+
+Input
+
+The only line of input contains an integer n.
+
+Output
+
+Print any beautiful permutation of the integers from 1 to n.
+
+If no valid permutation exists, print "NO SOLUTION".
+
+Constraints
+
+1 ≤ n ≤ 10^6
+
+Example 1
+
+Input
+5
+
+Output
+4 2 5 3 1
+
+Example 2
+
+Input
+3
+
+Output
+NO SOLUTION
