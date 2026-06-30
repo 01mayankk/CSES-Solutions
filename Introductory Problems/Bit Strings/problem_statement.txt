@@ -1,0 +1,40 @@
+Bit Strings
+
+Problem
+-------
+Your task is to calculate the number of bit strings of length n.
+
+A bit string consists only of the characters '0' and '1'.
+
+For example, if n = 3, the possible bit strings are:
+
+000
+001
+010
+011
+100
+101
+110
+111
+
+Hence, the answer is 8.
+
+Input
+-----
+The only input line contains an integer n.
+
+Output
+------
+Print the number of bit strings of length n modulo 10^9 + 7.
+
+Constraints
+-----------
+1 ≤ n ≤ 10^6
+
+Example
+-------
+Input:
+3
+
+Output:
+8
